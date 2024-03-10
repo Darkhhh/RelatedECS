@@ -22,7 +22,7 @@ public class SystemGroup : ISystemGroup
     public void Deactivate() => _active = false;
 
 
-    public ISystemGroup AddSystem(ISystem system)
+    public ISystemGroup AppendSystem(ISystem system)
     {
         _allSystems.Add(system);
 

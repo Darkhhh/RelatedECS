@@ -4,7 +4,7 @@ public interface ISystemGroup : IPrepareSystem, IFramePrepareSystem, IExecuteSys
 {
     public string Name { get; }
 
-    public ISystemGroup AddSystem(ISystem system);
+    public ISystemGroup AppendSystem(ISystem system);
 
     public IReadOnlyList<ISystem> GetAllSystems();
 
