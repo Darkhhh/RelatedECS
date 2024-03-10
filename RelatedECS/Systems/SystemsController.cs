@@ -18,7 +18,7 @@ public class SystemsController : ISystemsController
     private readonly Dictionary<string, ISystemGroup> _systemGroups = new(InitialCapacity);
 
 
-    public ISystemsController Add(ISystem system)
+    public ISystemsController AddSystem(ISystem system)
     {
         _allSystems.Add(system);
 
@@ -32,7 +32,7 @@ public class SystemsController : ISystemsController
         return this;
     }
 
-    public ISystemsController Add(ISystemGroup systemGroup)
+    public ISystemsController AddGroup(ISystemGroup systemGroup)
     {
         if (_systemGroups.ContainsKey(systemGroup.Name)) throw new Exception($"SystemGroup with name {systemGroup.Name} already exists");
 

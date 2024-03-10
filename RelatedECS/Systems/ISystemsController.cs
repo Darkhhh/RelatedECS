@@ -4,8 +4,8 @@ namespace RelatedECS.Systems;
 
 public interface ISystemsController
 {
-    public ISystemsController Add(ISystem system);
-    public ISystemsController Add(ISystemGroup systemGroup);
+    public ISystemsController AddSystem(ISystem system);
+    public ISystemsController AddGroup(ISystemGroup systemGroup);
 
     public ISystemGroup GetSystemGroup(string name);
     public IReadOnlyList<ISystem> GetAllSystems();
