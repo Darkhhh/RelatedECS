@@ -49,6 +49,8 @@ public class SystemsControllerTests
             _systemsController.GetSystemGroup("Group2");
         });
 
+        Assert.IsNotNull(_systemsController.GetSystemGroup("Group1"));
+
         _systemsController.AddGroup(new SystemGroup("Group2"));
 
         Assert.AreEqual(2, _systemsController.GetAllGroups().Count);
