@@ -42,11 +42,18 @@ internal class AppendStringExecuteSystem : IExecuteSystem
 {
     private readonly StringData _data;
     private readonly string _appendix;
+    private Func<bool>? _canBeExecuted;
 
-    public AppendStringExecuteSystem(StringData data, string appendix)
+    public AppendStringExecuteSystem(StringData data, string appendix, Func<bool>? canBeExecuted = null)
     {
         _data = data;
         _appendix = appendix;
+        _canBeExecuted = canBeExecuted;
+    }
+
+    public bool CanBeExecuted(IWorld world)
+    {
+        return _canBeExecuted is null ? true : _canBeExecuted();
     }
 
     public void Execute(IWorld world)
@@ -60,13 +67,19 @@ internal class AppendStringLateExecuteSystem : ILateExecuteSystem
 {
     private readonly StringData _data;
     private readonly string _appendix;
+    private Func<bool>? _canBeExecuted;
 
-    public AppendStringLateExecuteSystem(StringData data, string appendix)
+    public AppendStringLateExecuteSystem(StringData data, string appendix, Func<bool>? canBeExecuted = null)
     {
         _data = data;
         _appendix = appendix;
+        _canBeExecuted = canBeExecuted;
     }
 
+    public bool CanBeLateExecuted(IWorld world)
+    {
+        return _canBeExecuted is null ? true : _canBeExecuted();
+    }
 
     public void LateExecute(IWorld world)
     {

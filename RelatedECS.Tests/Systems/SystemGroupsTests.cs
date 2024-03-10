@@ -6,7 +6,7 @@ using RelatedECS.Tests.Dummies.Systems;
 namespace RelatedECS.Tests.Systems;
 
 [TestClass]
-public class SystemGroups
+public class SystemGroupsTests
 {
     [TestMethod]
     public void CorrectExecutionOrder()
