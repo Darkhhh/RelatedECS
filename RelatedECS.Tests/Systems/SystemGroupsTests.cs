@@ -14,12 +14,12 @@ public class SystemGroupsTests
         var world = new WorldDummy();
         var data = new StringData();
         var group = new SystemGroup("Test")
-            .AddSystem(new AppendStringPrepareSystem(data, "0"))
-            .AddSystem(new AppendStringFramePrepareSystem(data, "fp"))
-            .AddSystem(new AppendStringExecuteSystem(data, "1"))
-            .AddSystem(new AppendStringExecuteSystem(data, "2"))
-            .AddSystem(new AppendStringLateExecuteSystem(data, "3"))
-            .AddSystem(new AppendStringLateExecuteSystem(data, "4"));
+            .AppendSystem(new AppendStringPrepareSystem(data, "0"))
+            .AppendSystem(new AppendStringFramePrepareSystem(data, "fp"))
+            .AppendSystem(new AppendStringExecuteSystem(data, "1"))
+            .AppendSystem(new AppendStringExecuteSystem(data, "2"))
+            .AppendSystem(new AppendStringLateExecuteSystem(data, "3"))
+            .AppendSystem(new AppendStringLateExecuteSystem(data, "4"));
 
         group.Prepare(world);
         group.FramePrepare(world);
@@ -41,12 +41,12 @@ public class SystemGroupsTests
         var world = new WorldDummy();
         var data = new StringData();
         var group = new SystemGroup("Test")
-            .AddSystem(new AppendStringPrepareSystem(data, "0"))
-            .AddSystem(new AppendStringFramePrepareSystem(data, "fp"))
-            .AddSystem(new AppendStringExecuteSystem(data, "1"))
-            .AddSystem(new AppendStringExecuteSystem(data, "2"))
-            .AddSystem(new AppendStringLateExecuteSystem(data, "3"))
-            .AddSystem(new AppendStringLateExecuteSystem(data, "4"));
+            .AppendSystem(new AppendStringPrepareSystem(data, "0"))
+            .AppendSystem(new AppendStringFramePrepareSystem(data, "fp"))
+            .AppendSystem(new AppendStringExecuteSystem(data, "1"))
+            .AppendSystem(new AppendStringExecuteSystem(data, "2"))
+            .AppendSystem(new AppendStringLateExecuteSystem(data, "3"))
+            .AppendSystem(new AppendStringLateExecuteSystem(data, "4"));
 
         group.Prepare(world);
         group.FramePrepare(world);
@@ -68,12 +68,12 @@ public class SystemGroupsTests
         var world = new WorldDummy();
         var data = new StringData();
         var group = new SystemGroup("Test")
-            .AddSystem(new AppendStringPrepareSystem(data, "0"))
-            .AddSystem(new AppendStringFramePrepareSystem(data, "fp"))
-            .AddSystem(new AppendStringExecuteSystem(data, "1"))
-            .AddSystem(new AppendStringExecuteSystem(data, "2"))
-            .AddSystem(new AppendStringLateExecuteSystem(data, "3"))
-            .AddSystem(new AppendStringLateExecuteSystem(data, "4"));
+            .AppendSystem(new AppendStringPrepareSystem(data, "0"))
+            .AppendSystem(new AppendStringFramePrepareSystem(data, "fp"))
+            .AppendSystem(new AppendStringExecuteSystem(data, "1"))
+            .AppendSystem(new AppendStringExecuteSystem(data, "2"))
+            .AppendSystem(new AppendStringLateExecuteSystem(data, "3"))
+            .AppendSystem(new AppendStringLateExecuteSystem(data, "4"));
 
         group.Prepare(world);
         group.FramePrepare(world);
@@ -101,12 +101,12 @@ public class SystemGroupsTests
     {
         var data = new StringData();
         var group = new SystemGroup("Test")
-            .AddSystem(new AppendStringPrepareSystem(data, "0"))
-            .AddSystem(new AppendStringFramePrepareSystem(data, "fp"))
-            .AddSystem(new AppendStringExecuteSystem(data, "1"))
-            .AddSystem(new AppendStringExecuteSystem(data, "2"))
-            .AddSystem(new AppendStringLateExecuteSystem(data, "3"))
-            .AddSystem(new AppendStringLateExecuteSystem(data, "4"));
+            .AppendSystem(new AppendStringPrepareSystem(data, "0"))
+            .AppendSystem(new AppendStringFramePrepareSystem(data, "fp"))
+            .AppendSystem(new AppendStringExecuteSystem(data, "1"))
+            .AppendSystem(new AppendStringExecuteSystem(data, "2"))
+            .AppendSystem(new AppendStringLateExecuteSystem(data, "3"))
+            .AppendSystem(new AppendStringLateExecuteSystem(data, "4"));
 
         var systems = group.GetAllSystems();
         Assert.AreEqual(6, systems.Count);
