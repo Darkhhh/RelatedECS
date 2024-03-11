@@ -16,4 +16,10 @@ public interface IEntitiesFilter : IEnumerable<Entity>, IEnumerator<Entity>
     public IEntitiesFilter With<T>() where T : struct;
 
     public IEntitiesFilter Without<T>() where T : struct;
+
+    public void WithTypes(params Type[] types);
+
+    public void WithoutTypes(params Type[] types);
+
+    public IEntitiesFilter Register(IWorld world);
 }
