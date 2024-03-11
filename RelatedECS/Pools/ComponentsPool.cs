@@ -39,6 +39,7 @@ public class ComponentsPool<T> : IComponentsPool where T : struct
 
     public ref T Add(int entity)
     {
+        if (entity < 0) throw new ArgumentOutOfRangeException(nameof(entity), "Entity can't be less than zero.");
         if (Has(entity)) throw new Exception("Entity already in pool");
         if (_componentsByEntities.Length < entity) Array.Resize(ref _componentsByEntities, entity + 1);
         int componentIndex;
@@ -66,6 +67,7 @@ public class ComponentsPool<T> : IComponentsPool where T : struct
 
     public bool Has(int entity)
     {
+        if (entity < 0) throw new ArgumentOutOfRangeException(nameof(entity), "Entity can't be less than zero.");
         return entity < _componentsByEntities.Length
                && _componentsByEntities[entity] != -1
                && _components[_componentsByEntities[entity]].Entity == entity;

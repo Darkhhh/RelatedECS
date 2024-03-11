@@ -2,7 +2,7 @@
 
 public interface IComponentsPool
 {
-    protected const int InitialCapacity = 256;
+    public const int InitialCapacity = 256;
 
     public int Id { get; }
 
