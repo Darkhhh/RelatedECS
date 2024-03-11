@@ -1,6 +1,6 @@
 ﻿namespace RelatedECS.Pools;
 
-public delegate void AutoResetHandle<T>(ref T value);
+public delegate void AutoResetHandle<T>(ref T value) where T : struct;
 
 public interface IAutoResetComponent<T> where T : struct
 {

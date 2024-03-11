@@ -1,4 +1,6 @@
-﻿namespace RelatedECS.Pools;
+﻿using System.Reflection;
+
+namespace RelatedECS.Pools;
 
 public class ComponentsPool<T> : IComponentsPool where T : struct
 {
@@ -31,9 +33,9 @@ public class ComponentsPool<T> : IComponentsPool where T : struct
 
         if (_componentType.IsAssignableTo(typeof(IAutoResetComponent<T>)))
         {
-            var method = typeof(IAutoResetComponent<T>).GetMethod(nameof(IAutoResetComponent<T>.AutoReset));
+            var method = _componentType.GetMethod(nameof(IAutoResetComponent<T>.AutoReset), BindingFlags.Public | BindingFlags.Static);
             if (method is null) throw new ArgumentNullException(nameof(method));
-            _resetHandler = (AutoResetHandle<T>)Delegate.CreateDelegate(typeof(AutoResetHandle<T>), method);
+            _resetHandler = (AutoResetHandle<T>)Delegate.CreateDelegate(typeof(AutoResetHandle<T>), null, method);
         }
     }
 
