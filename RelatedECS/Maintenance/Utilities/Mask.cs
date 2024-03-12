@@ -10,10 +10,19 @@ public class Mask
     {
         var arrayIndex = index / BitSize;
         var numIndex = index - arrayIndex * BitSize;
-        if (arrayIndex > _array.Length) Array.Resize(ref _array, arrayIndex);
+        Resize(index);
 
         if (value == GetBit(_array[arrayIndex], numIndex)) return;
         _array[arrayIndex] = SetBit(_array[arrayIndex], numIndex, value);
+    }
+
+    public bool Get(int index)
+    {
+        var arrayIndex = index / BitSize;
+        var numIndex = index - arrayIndex * BitSize;
+        Resize(index);
+
+        return GetBit(_array[arrayIndex], numIndex);
     }
 
     public bool Compare(Mask other)
@@ -30,7 +39,7 @@ public class Mask
     {
         if (maxIndex < 0 || maxIndex <= _array.Length * BitSize) return;
         var arrayIndex = maxIndex / BitSize;
-        Array.Resize(ref _array, arrayIndex);
+        Array.Resize(ref _array, arrayIndex + 1);
     }
 
     public ulong this[int arrayIndex]
@@ -39,21 +48,13 @@ public class Mask
         set => _array[arrayIndex] = value;
     }
 
-    public bool this[int arrayIndex, int bitIndex]
-    {
-        get => GetBit(_array[arrayIndex], bitIndex);
-        set => _array[arrayIndex] = SetBit(_array[arrayIndex], bitIndex, value);
-    }
-
-    public ulong[] GetRaw() => _array;
-
     public void Clear()
     {
         for (int i = 0; i < _array.Length; i++) _array[i] = 0;
     }
 
     public bool IsEmpty => _array.All(t => t == 0);
-    public int ArrayLength => _array.Length;
+    public int Length => _array.Length;
 
 
     private static ulong SetBit(ulong val, int index, bool bit)
