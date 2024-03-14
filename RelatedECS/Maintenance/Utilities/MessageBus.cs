@@ -47,7 +47,7 @@ public interface IMessageBus
 
     public void ClearAllSubscriptions();
 
-    public int CountSubs<T>() where T : IMessage;
+    public int CountSubsFor<T>() where T : IMessage;
 }
 
 public class MessageBus(IWorld world) : IMessageBus
@@ -231,7 +231,7 @@ public class MessageBus(IWorld world) : IMessageBus
             (_singletonMessages.TryGetValue(typeof(T), out var single) ? (single is null ? 0 : 1) : 0);
     }
 
-    public int CountSubs<T>() where T : IMessage
+    public int CountSubsFor<T>() where T : IMessage
     {
         return _subscribers.TryGetValue(typeof(T), out var subs) ? subs.Count : 0;
     }
