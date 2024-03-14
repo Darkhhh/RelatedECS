@@ -30,21 +30,21 @@ public interface IMessageBus
 
     public IEnumerable<T> GetMessages<T>() where T : IMessage;
 
-    public void SubscribeTo<T>(Action action) where T : IMessage;
+    public void SubscribeTo<T>(Action<IWorld> action) where T : IMessage;
 
-    public void UnsubscribeFrom<T>(Action action) where T : IMessage;
+    public void UnsubscribeFrom<T>(Action<IWorld> action) where T : IMessage;
 
     public void ClearAllSubscriptions<T>() where T : IMessage;
 
     public void ClearAllSubscriptions();
 }
 
-public class MessageBus : IMessageBus
+public class MessageBus(IWorld world) : IMessageBus
 {
     private readonly Dictionary<Type, HashSet<IMessage>> _transientMessages = new();
     private readonly Dictionary<Type, ISingletonMessage?> _singletonMessages = new();
 
-    private readonly Dictionary<Type, HashSet<Action>> _subscribers = new();
+    private readonly Dictionary<Type, HashSet<Action<IWorld>>> _subscribers = new();
 
     #region Transient
 
@@ -62,7 +62,7 @@ public class MessageBus : IMessageBus
 
         if (!_subscribers.TryGetValue(type, out var subs)) return;
 
-        foreach (var item in subs) item.Invoke();
+        foreach (var item in subs) item.Invoke(world);
     }
 
     public int Count<T>() where T : IMessage
@@ -107,7 +107,7 @@ public class MessageBus : IMessageBus
 
         if (!_subscribers.TryGetValue(type, out var subs)) return;
 
-        foreach (var item in subs) item.Invoke();
+        foreach (var item in subs) item.Invoke(world);
     }
 
     public T GetSingleton<T>() where T : ISingletonMessage
@@ -137,13 +137,13 @@ public class MessageBus : IMessageBus
 
     #region Subscriptions
 
-    public void SubscribeTo<T>(Action action) where T : IMessage
+    public void SubscribeTo<T>(Action<IWorld> action) where T : IMessage
     {
         if (_subscribers.TryGetValue(typeof(T), out var value)) value.Add(action);
         else _subscribers.Add(typeof(T), [action]);
     }
 
-    public void UnsubscribeFrom<T>(Action action) where T : IMessage
+    public void UnsubscribeFrom<T>(Action<IWorld> action) where T : IMessage
     {
         if (!_subscribers.TryGetValue(typeof(T), out var value)) return;
         value.Remove(action);

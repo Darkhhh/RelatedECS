@@ -1,6 +1,21 @@
 ﻿namespace RelatedECS.Maintenance.Utilities;
 
-public class SharedBag
+public interface ISharedBag
+{
+    public void Add<T>(T obj) where T : notnull;
+
+    public void Add<T>(T obj, string tag) where T : notnull;
+
+    public T Get<T>() where T : notnull;
+
+    public T Get<T>(string tag) where T : notnull;
+
+    public bool Has<T>() where T : notnull;
+
+    public bool Has(string tag);
+}
+
+public class SharedBag : ISharedBag
 {
     private readonly Dictionary<Type, object> _objects = new();
     private readonly Dictionary<string, object> _taggedObjects = new();
