@@ -9,44 +9,149 @@ public interface ISingletonMessage : IMessage;
 
 public interface IMessageBus
 {
+    /// <summary>
+    /// Adding new message instance.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    /// <param name="message">Message instance.</param>
     public void Add<T>(T message) where T : IMessage;
 
+    /// <summary>
+    /// Check if bus have messages of required type.
+    /// </summary>
+    /// <typeparam name="T">Required message type.</typeparam>
+    /// <returns>True if there more than zero messages of required type, otherwise - False.</returns>
     public bool Has<T>() where T : IMessage;
 
+    /// <summary>
+    /// Getting last added message of type with removing.
+    /// </summary>
+    /// <typeparam name="T">Required message type.</typeparam>
+    /// <param name="message">Message instance. Maybe null when return is false.</param>
+    /// <returns>True if element was found, False if there is no messages of required type.</returns>
     public bool TryPop<T>([MaybeNullWhen(false)] out T message) where T : IMessage;
 
+    /// <summary>
+    /// Getting last added message of type without removing.
+    /// </summary>
+    /// <typeparam name="T">Required message type.</typeparam>
+    /// <param name="message">Message instance. Maybe null when return is false.</param>
+    /// <returns>True if element was found, False if there is no messages of required type.</returns>
     public bool TryPeek<T>([MaybeNullWhen(false)] out T message) where T : IMessage;
 
+    /// <summary>
+    /// Getting first added message of type with removing.
+    /// </summary>
+    /// <typeparam name="T">Required message type.</typeparam>
+    /// <param name="message">Message instance. Maybe null when return is false.</param>
+    /// <returns>True if element was found, False if there is no messages of required type.</returns>
     public bool TryPopFirst<T>([MaybeNullWhen(false)] out T message) where T : IMessage;
 
+    /// <summary>
+    /// Getting first added message of type without removing.
+    /// </summary>
+    /// <typeparam name="T">Required message type.</typeparam>
+    /// <param name="message">Message instance. Maybe null when return is false.</param>
+    /// <returns>True if element was found, False if there is no messages of required type.</returns>
     public bool TryPeekFirst<T>([MaybeNullWhen(false)] out T message) where T : IMessage;
 
+    /// <summary>
+    /// Removing message instance from bus. For singleton message use RemoveSingleton.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    /// <param name="message">Message instance.</param>
     public void RemoveMessage<T>(T message) where T : IMessage;
 
+    /// <summary>
+    /// Count messages of required type. Singleton compatible.
+    /// </summary>
+    /// <typeparam name="T">Messages type.</typeparam>
+    /// <returns>Number of messages of required type.</returns>
     public int Count<T>() where T : IMessage;
 
-    public void ClearAll<T>() where T : IMessage;
+    /// <summary>
+    /// Removing all messages of required type. Singleton compatible.
+    /// </summary>
+    /// <typeparam name="T">Messages type.</typeparam>
+    public void Clear<T>() where T : IMessage;
 
+    /// <summary>
+    /// Clearing all messages.
+    /// </summary>
+    public void ClearAll();
+
+    /// <summary>
+    /// Adding single instance of message. Throws exception when message already added.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    /// <param name="message">Message instance.</param>
     public void AddSingleton<T>(T message) where T : ISingletonMessage;
 
+    /// <summary>
+    /// Check if single message already added.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    /// <returns>True if instance added, otherwise false.</returns>
     public bool HasSingleton<T>() where T : ISingletonMessage;
 
+    /// <summary>
+    /// Get single message. Throws an exception if message does not exist.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    /// <returns>Message instance.</returns>
     public T GetSingleton<T>() where T : ISingletonMessage;
 
+    /// <summary>
+    /// Removing single message of required type. If message does not exist does nothing.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
     public void RemoveSingleton<T>() where T : ISingletonMessage;
 
+    /// <summary>
+    /// Get automatic clear system for messages of required type. Singleton compatible.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    /// <returns>IFrameDispose automatic clear system.</returns>
     public IFrameDisposeSystem GetClearSystemFor<T>() where T : IMessage;
 
+    /// <summary>
+    /// Get all messages of required type.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    /// <returns>Messages collection. May be empty if there is no messages of type exist.</returns>
     public IEnumerable<T> GetMessages<T>() where T : IMessage;
 
+    /// <summary>
+    /// Add action that will be called when new message of required type is added. Singleton compatible.
+    /// Only unique (by hash) actions will be added, no duplicates allowed.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    /// <param name="action">Subscription action.</param>
     public void SubscribeTo<T>(Action<IWorld> action) where T : IMessage;
 
+    /// <summary>
+    /// Remove action from call list.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    /// <param name="action">Subscription action.</param>
     public void UnsubscribeFrom<T>(Action<IWorld> action) where T : IMessage;
 
-    public void ClearAllSubscriptions<T>() where T : IMessage;
+    /// <summary>
+    /// Remove all subscriptions to messages of type.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    public void UnsubscribeAllFrom<T>() where T : IMessage;
 
+    /// <summary>
+    /// Remove all subscriptions.
+    /// </summary>
     public void ClearAllSubscriptions();
 
+    /// <summary>
+    /// Count all action-subscriptions to required message type.
+    /// </summary>
+    /// <typeparam name="T">Message type.</typeparam>
+    /// <returns>Number of actions.</returns>
     public int CountSubsFor<T>() where T : IMessage;
 }
 
@@ -195,7 +300,7 @@ public class MessageBus(IWorld world) : IMessageBus
         value.Remove(action);
     }
 
-    public void ClearAllSubscriptions<T>() where T : IMessage
+    public void UnsubscribeAllFrom<T>() where T : IMessage
     {
         if (!_subscribers.TryGetValue(typeof(T), out var value)) return;
         value.Clear();
@@ -214,10 +319,17 @@ public class MessageBus(IWorld world) : IMessageBus
 
     public IFrameDisposeSystem GetClearSystemFor<T>() where T : IMessage => new ClearSystem<T>(this);
 
-    public void ClearAll<T>() where T : IMessage
+    public void Clear<T>() where T : IMessage
     {
         if (_transientMessages.TryGetValue(typeof(T), out var value)) value.Clear();
         if (_singletonMessages.TryGetValue(typeof(T), out var _)) _singletonMessages[typeof(T)] = null;
+    }
+
+    public void ClearAll()
+    {
+        foreach(var messages in _transientMessages.Values) messages.Clear();
+        _transientMessages.Clear();
+        _singletonMessages.Clear();
     }
 
     #endregion
@@ -241,6 +353,6 @@ public class MessageBus(IWorld world) : IMessageBus
 
     private class ClearSystem<T>(IMessageBus bus) : IFrameDisposeSystem where T : IMessage
     {
-        public void FrameDispose(IWorld world) => bus.ClearAll<T>();
+        public void FrameDispose(IWorld world) => bus.Clear<T>();
     }
 }
