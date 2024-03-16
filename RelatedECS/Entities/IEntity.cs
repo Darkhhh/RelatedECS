@@ -1,10 +1,16 @@
-﻿namespace RelatedECS.Entities;
+﻿using RelatedECS.Maintenance.Utilities;
+
+namespace RelatedECS.Entities;
 
 public interface IEntity
 {
     public int Id { get; }
 
-    public IReadOnlyList<IEntity> Relations { get; }
+    public bool IsAlive { get; }
+
+    public IWorld World { get; }
+
+    public Mask GetMask();
 
     public ref T Add<T>() where T : struct;
 

@@ -16,14 +16,14 @@ public interface IObjectPool
 /// <summary>
 /// Based on <see href="https://learn.microsoft.com/ru-ru/dotnet/standard/collections/thread-safe/how-to-create-an-object-pool">Microsoft Documentation</see>
 /// </summary>
-public class ObjectPool<T> : IObjectPool where T : IAutoReset, new()
+public class ObjectPool<T> : IObjectPool where T : IAutoReset
 {
     private readonly ConcurrentBag<T> _objects;
     private readonly Func<T> _objectGenerator;
 
-    public ObjectPool(Func<T>? objectGenerator = null)
+    public ObjectPool(Func<T> objectGenerator)
     {
-        _objectGenerator = objectGenerator is null ? () => new T() : objectGenerator;
+        _objectGenerator = objectGenerator;
         _objects = new ConcurrentBag<T>();
     }
 

@@ -1,10 +1,13 @@
 ﻿using RelatedECS.Filters;
 using RelatedECS.Maintenance.Utilities;
+using RelatedECS.Pools;
 
 namespace RelatedECS;
 
 public interface IWorld
 {
+    public ComponentsPool<T> GetPool<T>() where T : struct;
+
     public IMessageBus Bus { get; }
 
     public ISharedBag Bag { get; }

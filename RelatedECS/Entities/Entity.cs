@@ -4,37 +4,38 @@ namespace RelatedECS.Entities;
 
 public class Entity : IEntity, IAutoReset
 {
-    public int Id => throw new NotImplementedException();
+    private readonly IWorld _world;
+    private readonly int _id;
+    private readonly Mask _mask = new();
 
-    public IReadOnlyList<IEntity> Relations => throw new NotImplementedException();
+    private bool _alive;
 
-    public ref T Add<T>() where T : struct
-    {
-        throw new NotImplementedException();
-    }
+    public Entity(int id, IWorld world) => (_id, _world) = (id, world);
 
-    public void Delete<T>() where T : struct
-    {
-        throw new NotImplementedException();
-    }
+    public int Id => _id;
 
-    public ref T Get<T>() where T : struct
-    {
-        throw new NotImplementedException();
-    }
+    public bool IsAlive => _alive;
 
-    public bool Has<T>() where T : struct
-    {
-        throw new NotImplementedException();
-    }
+    public IWorld World => _world;
+
+    public ref T Add<T>() where T : struct => ref _world.GetPool<T>().Add(_id);
+
+    public void Delete<T>() where T : struct => _world.GetPool<T>().Delete(_id);
+
+    public ref T Get<T>() where T : struct => ref _world.GetPool<T>().Get(_id);
+
+    public bool Has<T>() where T : struct => _world.GetPool<T>().Has(_id);
+
+    public Mask GetMask() => _mask;
 
     public void Init()
     {
-        throw new NotImplementedException();
+        _mask.Clear();
+        _alive = true;
     }
-
     public void Reset()
     {
-        throw new NotImplementedException();
-    }
+        _mask.Clear();
+        _alive = true;
+    } 
 }
