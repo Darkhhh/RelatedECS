@@ -2,11 +2,11 @@
 
 namespace RelatedECS.Entities;
 
-public class EntitiesController : IEntitiesController
+internal class EntitiesController : IEntitiesController
 {
     private readonly IWorld _world;
-    private readonly ObjectPool<IEntity> _recycledEntities;
-    private readonly Dictionary<int, IEntity> _entities = new();
+    private readonly ObjectPool<Entity> _recycledEntities;
+    private readonly Dictionary<int, Entity> _entities = new();
 
     private int _currentEntityIndex = 0;
     private int _lastPoolsCount;
@@ -19,7 +19,8 @@ public class EntitiesController : IEntitiesController
 
     public void PoolUpdated(Type poolType, int poolIndex, int entity, bool added)
     {
-        var wrap = GetById(entity);
+        var wrap = GetWrapById(entity);
+        
         var mask = wrap.GetMask();
 
         mask.Set(poolIndex, added);
@@ -36,6 +37,12 @@ public class EntitiesController : IEntitiesController
     }
 
     public IEntity GetById(int id)
+    {
+        if (_entities.TryGetValue(id, out var entity) && entity.IsAlive) return entity;
+        throw new InvalidOperationException("Could not get entity by id or it is not alive");
+    }
+
+    internal Entity GetWrapById(int id)
     {
         if (_entities.TryGetValue(id, out var entity) && entity.IsAlive) return entity;
         throw new InvalidOperationException("Could not get entity by id or it is not alive");

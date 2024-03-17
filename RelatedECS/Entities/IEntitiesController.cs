@@ -1,6 +1,6 @@
 ﻿namespace RelatedECS.Entities;
 
-public interface IEntitiesController
+internal interface IEntitiesController
 {
     public IEntity New();
 

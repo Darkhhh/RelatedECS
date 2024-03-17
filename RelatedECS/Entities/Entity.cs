@@ -2,7 +2,7 @@
 
 namespace RelatedECS.Entities;
 
-public class Entity : IEntity
+public class Entity : IEntity, IInternalEntity
 {
     private readonly IWorld _world;
     private readonly int _id;

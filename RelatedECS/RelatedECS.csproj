@@ -7,6 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="RelatedECS.Tests"/>
+    <InternalsVisibleTo Include="RelatedECS.Tests" />
   </ItemGroup>
 </Project>

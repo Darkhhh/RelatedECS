@@ -2,15 +2,18 @@
 
 namespace RelatedECS.Entities;
 
-public interface IEntity : IAutoReset
+internal interface IInternalEntity : IAutoReset
+{
+    public Mask GetMask();
+}
+
+public interface IEntity
 {
     public int Id { get; }
 
     public bool IsAlive { get; }
 
-    public IWorld World { get; }
-
-    public Mask GetMask();
+    public IWorld World { get; }   
 
     public ref T Add<T>() where T : struct;
 
