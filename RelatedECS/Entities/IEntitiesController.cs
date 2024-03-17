@@ -4,8 +4,6 @@ public interface IEntitiesController
 {
     public IEntity New();
 
-    public bool IsAlive(IEntity entity);
-
     public IEnumerable<IEntity> GetEntitiesRaw();
 
     public IEntity GetById(int id);

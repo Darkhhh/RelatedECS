@@ -5,8 +5,8 @@ namespace RelatedECS.Entities;
 public class EntitiesController : IEntitiesController
 {
     private readonly IWorld _world;
-    private readonly ObjectPool<Entity> _recycledEntities;
-    private readonly Dictionary<int, Entity> _entities = new();
+    private readonly ObjectPool<IEntity> _recycledEntities;
+    private readonly Dictionary<int, IEntity> _entities = new();
 
     private int _currentEntityIndex = 0;
     private int _lastPoolsCount;
@@ -17,15 +17,13 @@ public class EntitiesController : IEntitiesController
         _world = world;
     }
 
-    public bool IsAlive(IEntity entity) => entity.IsAlive;
-
     public void PoolUpdated(Type poolType, int poolIndex, int entity, bool added)
     {
         var wrap = GetById(entity);
         var mask = wrap.GetMask();
 
         mask.Set(poolIndex, added);
-        if (mask.IsEmpty) _recycledEntities.Return((Entity)wrap);
+        if (mask.IsEmpty) _recycledEntities.Return(wrap);
     }
 
     public void UpdatePoolsAmount(int poolsAmount)
@@ -49,7 +47,9 @@ public class EntitiesController : IEntitiesController
     private Entity NewEntityGenerator()
     {
         var e = new Entity(_currentEntityIndex++, _world);
+        e.Init();
         e.GetMask().Resize(_lastPoolsCount);
+        _entities.Add(e.Id, e);
         return e;
     }
 }

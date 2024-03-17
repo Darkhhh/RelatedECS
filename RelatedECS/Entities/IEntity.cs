@@ -2,7 +2,7 @@
 
 namespace RelatedECS.Entities;
 
-public interface IEntity
+public interface IEntity : IAutoReset
 {
     public int Id { get; }
 

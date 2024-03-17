@@ -2,7 +2,7 @@
 
 namespace RelatedECS.Entities;
 
-public class Entity : IEntity, IAutoReset
+public class Entity : IEntity
 {
     private readonly IWorld _world;
     private readonly int _id;
@@ -36,6 +36,6 @@ public class Entity : IEntity, IAutoReset
     public void Reset()
     {
         _mask.Clear();
-        _alive = true;
+        _alive = false;
     } 
 }
