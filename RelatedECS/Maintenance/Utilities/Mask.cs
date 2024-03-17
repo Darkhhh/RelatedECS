@@ -2,7 +2,7 @@
 
 public class Mask
 {
-    private const int BitSize = 64;
+    internal const int BitSize = 64;
     private ulong[] _array = new ulong[2];
 
 
