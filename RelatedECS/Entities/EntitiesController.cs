@@ -54,7 +54,6 @@ internal class EntitiesController : IEntitiesController
     private Entity NewEntityGenerator()
     {
         var e = new Entity(_currentEntityIndex++, _world);
-        e.Init();
         e.GetMask().Resize(_lastPoolsCount);
         _entities.Add(e.Id, e);
         return e;
