@@ -1,5 +1,4 @@
-﻿using RelatedECS.Entities;
-using RelatedECS.Tests.Dummies;
+﻿using RelatedECS.Tests.Dummies;
 using RelatedECS.Tests.Dummies.Components;
 
 namespace RelatedECS.Tests.Entities;

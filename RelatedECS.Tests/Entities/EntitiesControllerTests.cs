@@ -1,14 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RelatedECS.Entities;
+﻿using RelatedECS.Entities;
 using RelatedECS.Maintenance.Utilities;
 using RelatedECS.Pools;
 using RelatedECS.Tests.Dummies;
 using RelatedECS.Tests.Dummies.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RelatedECS.Tests.Entities;
 
@@ -18,12 +12,15 @@ public class EntitiesControllerTests
     [TestMethod]
     public void CorrectEntitiesCreation()
     {
+        var entities = new EntitiesController(new WorldDummy());
+        var components = new ComponentsPoolsController(entities.PoolUpdated);
+
         var world = new WorldDummy();
         var set = new HashSet<int>();
 
         for (int i = 0; i < 10; i++)
         {
-            var e = world.EntitiesController.New();
+            var e = entities.New();
             Assert.IsNotNull(e);
             Assert.IsFalse(set.Contains(e.Id));
             set.Add(e.Id);
