@@ -9,6 +9,7 @@ public class Entity : IEntity, IInternalEntity
     private readonly Mask _mask = new();
 
     private bool _alive;
+    private int _generation;
 
     public Entity(int id, IWorld world) => (_id, _world) = (id, world);
 
@@ -17,6 +18,8 @@ public class Entity : IEntity, IInternalEntity
     public bool IsAlive => _alive;
 
     public IWorld World => _world;
+
+    public int Generation => _generation;
 
     public ref T Add<T>() where T : struct => ref _world.GetPool<T>().Add(_id);
 
@@ -32,6 +35,7 @@ public class Entity : IEntity, IInternalEntity
     {
         _mask.Clear();
         _alive = true;
+        _generation++;
     }
     public void Reset()
     {

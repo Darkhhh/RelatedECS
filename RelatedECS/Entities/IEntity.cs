@@ -5,6 +5,8 @@ namespace RelatedECS.Entities;
 internal interface IInternalEntity : IAutoReset
 {
     public Mask GetMask();
+
+    public int Generation { get; }
 }
 
 public interface IEntity
