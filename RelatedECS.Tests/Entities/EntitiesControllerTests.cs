@@ -170,4 +170,16 @@ public class EntitiesControllerTests
 
         Assert.AreEqual(2, e1Wrap.Generation);
     }
+
+    [TestMethod]
+    public void CorrectEntityPackCreation()
+    {
+        var world = new WorldDummy();
+        var e1 = world.EntitiesController.New();
+
+        var pack = world.EntitiesController.Pack(e1);
+
+        Assert.IsTrue(pack.TryGet(out var e2));
+        Assert.IsTrue(ReferenceEquals(e1, e2));
+    }
 }
