@@ -11,4 +11,6 @@ internal interface IEntitiesController
     public void UpdatePoolsAmount(int poolsAmount);
 
     public void PoolUpdated(Type poolType, int poolIndex, int entity, bool added);
+
+    public EntityPack Pack(IEntity entity);
 }

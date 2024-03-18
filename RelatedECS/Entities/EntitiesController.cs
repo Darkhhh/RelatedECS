@@ -36,6 +36,12 @@ internal class EntitiesController : IEntitiesController
         }
     }
 
+    public EntityPack Pack(IEntity entity)
+    {
+        var e = _entities[entity.Id];
+        return new EntityPack(e, e.Generation);
+    }
+
     public IEntity GetById(int id)
     {
         if (_entities.TryGetValue(id, out var entity) && entity.IsAlive) return entity;
