@@ -149,4 +149,25 @@ public class EntitiesControllerTests
             Assert.AreEqual(3, e.GetMask().Length);
         }
     }
+
+    [TestMethod]
+    public void CorrectGenerationChange()
+    {
+        var world = new WorldDummy();
+        var e1 = world.EntitiesController.New();
+        var e1Wrap = e1 as Entity;
+        Assert.IsNotNull(e1Wrap);
+
+        Assert.AreEqual(1, e1Wrap.Generation);
+
+        e1.Add<CPosition>();
+        e1.Delete<CPosition>();
+
+        var e2 = world.EntitiesController.New();
+        var e2Wrap = e2 as Entity;
+        Assert.IsNotNull(e2Wrap);
+        Assert.IsTrue(ReferenceEquals(e1, e2));
+
+        Assert.AreEqual(2, e1Wrap.Generation);
+    }
 }
