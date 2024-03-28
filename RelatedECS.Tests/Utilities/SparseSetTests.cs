@@ -9,7 +9,7 @@ public class SparseSetTests
     public void CorrectCreating()
     {
         var set = new SparseSet(1000, 10);
-        Assert.AreEqual(0, set.Count());
+        Assert.AreEqual(0, set.Length);
     }
 
     [TestMethod]
@@ -18,12 +18,12 @@ public class SparseSetTests
         var set = new SparseSet(1000, 2);
         Assert.AreEqual(true, set.Insert(520));
         Assert.AreEqual(false, set.Insert(520));
-        Assert.AreEqual(1, set.Count());
+        Assert.AreEqual(1, set.Length);
         Assert.AreEqual(false, set.Insert(1520));
         Assert.AreEqual(true, set.Insert(400));
-        Assert.IsTrue(set.Full());
+        Assert.IsTrue(set.Full);
         Assert.AreEqual(false, set.Insert(321));
-        Assert.AreEqual(2, set.Count());
+        Assert.AreEqual(2, set.Length);
     }
 
     [TestMethod]
@@ -34,13 +34,13 @@ public class SparseSetTests
         set.Insert(72);
 
         set.Delete(60);
-        Assert.AreEqual(2, set.Count());
+        Assert.AreEqual(2, set.Length);
         set.Delete(260);
-        Assert.AreEqual(2, set.Count());
+        Assert.AreEqual(2, set.Length);
         set.Delete(100);
-        Assert.AreEqual(1, set.Count());
+        Assert.AreEqual(1, set.Length);
         set.Delete(72);
-        Assert.AreEqual(0, set.Count());
+        Assert.AreEqual(0, set.Length);
     }
 
     [TestMethod]
@@ -100,5 +100,26 @@ public class SparseSetTests
         Assert.AreEqual(0, set.Find(64));
         Assert.AreEqual(true, set.Insert(256));
         Assert.AreEqual(1, set.Find(256));
+    }
+
+    [TestMethod]
+    public void CorrectIndexator()
+    {
+        var set = new SparseSet(200, 4);
+        Assert.IsTrue(set.Insert(64));
+        Assert.IsTrue(set.Insert(15));
+        Assert.IsTrue(set.Insert(128));
+        Assert.IsTrue(set.Insert(3));
+        Assert.IsTrue(Compare(ref set, [64, 15, 128, 3]));
+    }
+
+    private bool Compare(ref SparseSet set, int[] array)
+    {
+        if (set.Length != array.Length) return false;
+        for (int i = 0; i < set.Length; i++)
+        {
+            if (set[i] != array[i]) return false;
+        }
+        return true;
     }
 }
