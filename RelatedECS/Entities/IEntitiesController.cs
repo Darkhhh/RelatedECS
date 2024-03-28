@@ -1,12 +1,15 @@
 ﻿namespace RelatedECS.Entities;
 
-internal interface IEntitiesController
+internal interface IEntitiesStorage
 {
-    public IEntity New();
-
     public IEnumerable<IEntity> GetEntitiesRaw();
 
     public IEntity GetById(int id);
+}
+
+internal interface IEntitiesController : IEntitiesStorage
+{
+    public IEntity New();
 
     public void UpdatePoolsAmount(int poolsAmount);
 
