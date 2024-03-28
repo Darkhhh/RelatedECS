@@ -13,6 +13,23 @@ public interface IObjectPool
     public Type GetObjectType();
 }
 
+public class ObjectPoolNoResetWrap<T> : IAutoReset
+{
+    public T Value { get; }
+
+    public ObjectPoolNoResetWrap(T value) => Value = value;
+
+    public void Init()
+    {
+        return;
+    }
+
+    public void Reset()
+    {
+        return;
+    }
+}
+
 /// <summary>
 /// Based on <see href="https://learn.microsoft.com/ru-ru/dotnet/standard/collections/thread-safe/how-to-create-an-object-pool">Microsoft Documentation</see>
 /// </summary>
