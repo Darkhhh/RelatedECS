@@ -71,12 +71,16 @@ public struct SparseSet
         _capacity = newCapacity;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public readonly int Count() => _numberOfElements;
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public readonly bool Full() => _numberOfElements == _capacity;
+    public readonly int this[int index]
+    {
+        get
+        {
+            if (index < 0 || index >= _numberOfElements || index >= _dense.Length) throw new ArgumentOutOfRangeException(nameof(index));
+            return _dense[index];
+        }
+    }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public readonly int GetByIndex(int index) => _dense[index];
+    public readonly int Length => _numberOfElements;
+    public readonly bool Full => _numberOfElements == _capacity;
 }
