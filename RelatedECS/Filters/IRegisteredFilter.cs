@@ -22,4 +22,6 @@ public interface IRegisteredFilter
     public void ResizeMasks(int maxPoolIndex);
 
     public int Count { get; }
+
+    public bool IsLocked { get; }
 }

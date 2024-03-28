@@ -24,6 +24,8 @@ internal class RegisteredFilter : IRegisteredFilter, IEntitiesProvider
 
     public int Count => _entities.Length;
 
+    public bool IsLocked => _locks > 0;
+
     public void Lock() => _locks++;
 
     public void Unlock()
