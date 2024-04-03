@@ -139,6 +139,46 @@ public class FilterDeclarationTests
         });
     }
 
+    [TestMethod]
+    public void CorrectComparisonEquals()
+    {
+        var f1 = new FilterDeclaration(new WorldDummy());
+        f1.WithTypes(typeof(Component2), typeof(Component3), typeof(Component4));
+        f1.WithoutTypes(typeof(Component1), typeof(Component5));
+
+        var f2 = new FilterDeclaration(new WorldDummy());
+        f2.WithTypes(typeof(Component2), typeof(Component3), typeof(Component4));
+        f2.WithoutTypes(typeof(Component1), typeof(Component5));
+
+        Assert.IsTrue(f1.EqualTo(f2));
+        Assert.IsTrue(f2.EqualTo(f1));
+    }
+
+    [TestMethod]
+    public void CorrectComparisonNotEquals()
+    {
+        var f1 = new FilterDeclaration(new WorldDummy());
+        f1.WithTypes(typeof(Component2), typeof(Component3), typeof(Component4));
+        f1.WithoutTypes(typeof(Component1), typeof(Component5));
+
+        var f2 = new FilterDeclaration(new WorldDummy());
+        f2.WithTypes(typeof(Component3), typeof(Component4));
+        f2.WithoutTypes(typeof(Component1), typeof(Component5));
+
+        var f3 = new FilterDeclaration(new WorldDummy());
+        f3.WithTypes(typeof(Component2), typeof(Component3), typeof(Component4));
+        f3.WithoutTypes(typeof(Component1));
+
+        Assert.IsFalse(f1.EqualTo(f2));
+        Assert.IsFalse(f1.EqualTo(f3));
+
+        Assert.IsFalse(f2.EqualTo(f1));
+        Assert.IsFalse(f2.EqualTo(f3));
+
+        Assert.IsFalse(f3.EqualTo(f2));
+        Assert.IsFalse(f3.EqualTo(f1));
+    }
+
     private struct Component1;
     private struct Component2;
     private struct Component3;
