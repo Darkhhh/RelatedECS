@@ -8,7 +8,7 @@ internal class EntitiesController : IEntitiesController
     private readonly ObjectPool<Entity> _recycledEntities;
     private readonly Dictionary<int, Entity> _entities = new();
 
-    private int _currentEntityIndex = 0;
+    private int _currentEntityIndex = 1;
     private int _lastPoolsCount;
 
     public EntitiesController(IWorld world)
@@ -57,6 +57,7 @@ internal class EntitiesController : IEntitiesController
     public IEnumerable<IEntity> GetEntitiesRaw() => _entities.Values;
 
     public IEntity New() => _recycledEntities.Get();
+
     private Entity NewEntityGenerator()
     {
         var e = new Entity(_currentEntityIndex++, _world);
