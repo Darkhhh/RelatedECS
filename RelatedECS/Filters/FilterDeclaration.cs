@@ -48,4 +48,22 @@ public class FilterDeclaration : IFilterDeclaration
             _withTypes.Add(type);
         }
     }
+
+    internal bool EqualTo(IFilterDeclaration other)
+    {
+        var with = other.GetWithTypes();
+        var without = other.GetWithoutTypes();
+
+        if (with.Length != _withTypes.Count || without.Length != _withoutTypes.Count) return false;
+        foreach(var type in with)
+        {
+            if (!_withTypes.Contains(type)) return false;
+        }
+        foreach(var type in without)
+        {
+            if (!_withoutTypes.Contains(type)) return false;
+        }
+
+        return true;
+    }
 }
