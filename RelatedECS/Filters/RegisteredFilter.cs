@@ -9,7 +9,7 @@ internal class RegisteredFilter : IRegisteredFilter, IEntitiesProvider
 
     private readonly IEntitiesStorage _entitiesStorage;
     private readonly Mask _withMask, _withoutMask;
-    private readonly SparseSet _entities;
+    private SparseSet _entities;
     private readonly List<DelayedFilterOperation> _operations = new();
 
     private int _locks = 0;
@@ -73,18 +73,21 @@ internal class RegisteredFilter : IRegisteredFilter, IEntitiesProvider
             if (!(entityInc == w && entityDec == wo)) masksApproved = false;
         }
 
-        if (masksApproved && contains) return 0;
+        if ((masksApproved && contains) || (!masksApproved && !contains)) return 0;
 
         if (masksApproved && !contains)
         {
             Add(entity);
-        }
-        else if (!masksApproved && contains)
-        {
-            Remove(entity);
+            return 1;
         }
 
-        throw new Exception($"Unhandled condition: Contains={contains}, Masks={masksApproved}");
+        if (!masksApproved && contains)
+        {
+            Remove(entity);
+            return -1;
+        }
+
+        return 0;
     }
 
     public Entity Get(int index)
@@ -92,12 +95,12 @@ internal class RegisteredFilter : IRegisteredFilter, IEntitiesProvider
         return (Entity)_entitiesStorage.GetById(_entities[index]);
     }
 
-    public int GetInitialIndex() => -1;
+    public int GetInitialIndex() => IsLocked ? -1 : throw new Exception("Trying to enumerate filter without lock.");
 
     public bool Next(int previousIndex, out int currentIndex)
     {
         currentIndex = -1;
-        if (previousIndex + 1 > _entities.Length) return false;
+        if (previousIndex + 1 >= _entities.Length) return false;
         currentIndex = previousIndex + 1;
         return true;
     }
