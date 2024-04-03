@@ -24,7 +24,7 @@ public class EntitiesAndIndicesEnumeratorsTests
         }
         Assert.AreEqual(entitiesNumber, f.Count);
 
-        var enumerator = new EntitiesEnumerator(f, () => { });
+        var enumerator = new EntitiesEnumerator(f, (e) => { });
         var count = 0;
         var deleted = 0;
         f.Lock();
@@ -65,7 +65,7 @@ public class EntitiesAndIndicesEnumeratorsTests
         }
         Assert.AreEqual(entitiesNumber, f.Count);
 
-        var enumerator = new IndicesEnumerator(f, () => { });
+        var enumerator = new IndicesEnumerator(f, (e) => { });
         var count = 0;
         var deleted = 0;
         f.Lock();
