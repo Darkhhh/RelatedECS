@@ -31,13 +31,13 @@ public class Entity : IEntity, IInternalEntity
 
     public Mask GetMask() => _mask;
 
-    public void Init()
+    public void PoolInit()
     {
         _mask.Clear();
         _alive = true;
         _generation++;
     }
-    public void Reset()
+    public void PoolReset()
     {
         _mask.Clear();
         _alive = false;

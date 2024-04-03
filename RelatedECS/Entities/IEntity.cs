@@ -2,7 +2,7 @@
 
 namespace RelatedECS.Entities;
 
-internal interface IInternalEntity : IAutoReset
+internal interface IInternalEntity : IObjectPoolAutoReset
 {
     public Mask GetMask();
 

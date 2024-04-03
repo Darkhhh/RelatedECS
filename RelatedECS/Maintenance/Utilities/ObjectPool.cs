@@ -2,10 +2,10 @@
 
 namespace RelatedECS.Maintenance.Utilities;
 
-public interface IAutoReset
+public interface IObjectPoolAutoReset
 {
-    public void Init();
-    public void Reset();
+    public void PoolInit();
+    public void PoolReset();
 }
 
 public interface IObjectPool
@@ -13,18 +13,18 @@ public interface IObjectPool
     public Type GetObjectType();
 }
 
-public class ObjectPoolNoResetWrap<T> : IAutoReset
+public class ObjectPoolNoResetWrap<T> : IObjectPoolAutoReset
 {
     public T Value { get; }
 
     public ObjectPoolNoResetWrap(T value) => Value = value;
 
-    public void Init()
+    public void PoolInit()
     {
         return;
     }
 
-    public void Reset()
+    public void PoolReset()
     {
         return;
     }
@@ -33,7 +33,7 @@ public class ObjectPoolNoResetWrap<T> : IAutoReset
 /// <summary>
 /// Based on <see href="https://learn.microsoft.com/ru-ru/dotnet/standard/collections/thread-safe/how-to-create-an-object-pool">Microsoft Documentation</see>
 /// </summary>
-public class ObjectPool<T> : IObjectPool where T : IAutoReset
+public class ObjectPool<T> : IObjectPool where T : IObjectPoolAutoReset
 {
     private readonly ConcurrentBag<T> _objects;
     private readonly Func<T> _objectGenerator;
@@ -47,13 +47,13 @@ public class ObjectPool<T> : IObjectPool where T : IAutoReset
     public T Get()
     {
         var result = _objects.TryTake(out var item) ? item : _objectGenerator();
-        result.Init();
+        result.PoolInit();
         return result;
     }
 
     public void Return(T item)
     {
-        item.Reset();
+        item.PoolReset();
         _objects.Add(item);
     }
 
