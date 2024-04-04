@@ -19,7 +19,6 @@ public abstract class EntitiesEnumeratorBase<TResultType>(IEntitiesProvider prov
     {
         var next = Provider.Next(Index, out var index);
         Index = index;
-        if (!next) Reset();
         return next;
     }
 
