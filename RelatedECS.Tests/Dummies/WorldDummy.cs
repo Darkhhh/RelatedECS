@@ -53,7 +53,7 @@ internal class WorldDummy : IWorld
 
     public IWorld AddSystem(ISystem system)
     {
-        return this 
+        return this; 
     }
 
     public IWorld AddGroup(ISystemGroup systemGroup)

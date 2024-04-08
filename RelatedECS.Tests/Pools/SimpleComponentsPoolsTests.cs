@@ -93,6 +93,33 @@ public class SimpleComponentsPoolsTests
     }
 
     [TestMethod]
+    public void CorrectGetRawMethod()
+    {
+        var list = new List<EntityState>();
+        var pool = new ComponentsPool<CPosition>(0, (t, e, add) => list.Add(new EntityState { PoolType = t, Index = e, Added = add }));
+
+        for (var i = 0; i < IComponentsPool.InitialCapacity + 1; i++)
+        {
+            Assert.ThrowsException<Exception>(() => pool.GetRaw(i));
+        }
+
+        var entity = 7;
+        ref var position = ref pool.Add(entity);
+        position.X = 4;
+        position.Y = 5;
+
+        var p = (CPosition)pool.GetRaw(entity);
+        Assert.AreEqual(4, p.X);
+        Assert.AreEqual(5, p.Y);
+
+        for (var i = 0; i < IComponentsPool.InitialCapacity + 1; i++)
+        {
+            if (i == entity) continue;
+            Assert.ThrowsException<Exception>(() => pool.GetRaw(i));
+        }
+    }
+
+    [TestMethod]
     public void CorrectDeleteMethod()
     {
         var list = new List<EntityState>();
