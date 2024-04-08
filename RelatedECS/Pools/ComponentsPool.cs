@@ -81,6 +81,12 @@ public class ComponentsPool<T> : IComponentsPool where T : struct
         return ref _components[_componentsByEntities[entity]].Value;
     }
 
+    public object GetRaw(int entity)
+    {
+        if (!Has(entity)) throw new Exception($"Trying to access not created component with entity id:{entity}");
+        return _components[_componentsByEntities[entity]].Value;
+    }
+
     public void Delete(int entity)
     {
         if (!Has(entity)) return;

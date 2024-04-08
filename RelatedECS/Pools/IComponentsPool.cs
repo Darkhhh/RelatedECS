@@ -10,5 +10,7 @@ public interface IComponentsPool
 
     public void Delete(int entity);
 
+    public object GetRaw(int entity);
+
     public Action<Type, int, bool> PoolChanged { get; init; }
 }
