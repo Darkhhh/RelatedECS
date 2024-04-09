@@ -49,6 +49,16 @@ public class FilterDeclaration : IFilterDeclaration
         }
     }
 
+    public bool HasWithType(Type type)
+    {
+        return _withTypes.Contains(type);
+    }
+
+    public bool HasWithoutType(Type type)
+    {
+        return _withoutTypes.Contains(type);
+    }
+
     internal bool EqualTo(IFilterDeclaration other)
     {
         var with = other.GetWithTypes();

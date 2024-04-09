@@ -13,4 +13,8 @@ public interface IFilterDeclaration
     public Type[] GetWithTypes();
 
     public Type[] GetWithoutTypes();
+
+    public bool HasWithType(Type type);
+
+    public bool HasWithoutType(Type type);
 }
