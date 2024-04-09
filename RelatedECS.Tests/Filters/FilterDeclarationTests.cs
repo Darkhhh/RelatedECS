@@ -179,6 +179,26 @@ public class FilterDeclarationTests
         Assert.IsFalse(f3.EqualTo(f1));
     }
 
+    [TestMethod]
+    public void CorrectHasWithType()
+    {
+        var declaration = new FilterDeclaration(new WorldDummy());
+        Assert.IsFalse(declaration.HasWithType(typeof(Component2)));
+        declaration.With<Component2>();
+        Assert.IsTrue(declaration.HasWithType(typeof(Component2)));
+        Assert.IsFalse(declaration.HasWithoutType(typeof(Component2)));
+    }
+
+    [TestMethod]
+    public void CorrectHasWithoutType()
+    {
+        var declaration = new FilterDeclaration(new WorldDummy());
+        Assert.IsFalse(declaration.HasWithoutType(typeof(Component1)));
+        declaration.Without<Component1>();
+        Assert.IsTrue(declaration.HasWithoutType(typeof(Component1)));
+        Assert.IsFalse(declaration.HasWithType(typeof(Component1)));
+    }
+
     private struct Component1;
     private struct Component2;
     private struct Component3;
