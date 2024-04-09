@@ -22,15 +22,14 @@ public class ConditionedEntitiesEnumerator : EntitiesEnumerator
 
     public override bool MoveNext()
     {
-        var next = Provider.Next(Index, out var index);
-        Index = index;
-        if (!next) return false;
-        while (!_checksController.Check(Provider.Get(Index).Id))
+        bool next, check;
+        do
         {
-            next = Provider.Next(Index, out index);
+            next = Provider.Next(Index, out int index);
             Index = index;
-            if (!next) break;
+            check = next ? _checksController.Check(Provider.Get(Index).Id) : false;
         }
+        while (next && !check);
         return next;
     }
 }
