@@ -15,7 +15,7 @@ public abstract class EntitiesEnumeratorBase<TResultType>(IEntitiesProvider prov
 
     public abstract TResultType Current { get; }
 
-    public bool MoveNext()
+    public virtual bool MoveNext()
     {
         var next = Provider.Next(Index, out var index);
         Index = index;
