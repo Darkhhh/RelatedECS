@@ -56,7 +56,7 @@ public class ComponentsPoolsController(PoolUpdated action) : IComponentsPoolsCon
         string msg = $"Could not create pool with {componentType.Name}";
         Type type = typeof(ComponentsPool<>).MakeGenericType(componentType);
 
-        var method = GetType().GetMethod(nameof(PoolBeenChanged), 
+        var method = GetType().GetMethod(nameof(PoolBeenChanged),
             System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Default | System.Reflection.BindingFlags.Instance);
         var del = Delegate.CreateDelegate(typeof(Action<Type, int, bool>), this, method!);
 

@@ -71,7 +71,6 @@ public struct SparseSet
         _capacity = newCapacity;
     }
 
-
     public readonly int this[int index]
     {
         get

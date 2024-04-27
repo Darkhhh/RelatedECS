@@ -21,7 +21,7 @@ public class EntitiesFilter : IFilter<IEntity>
         _filter = filter;
         Declaration = declaration;
         _enumeratorsPool = new ObjectPool<EntitiesEnumerator>(EnumeratorGenerator);
-    }    
+    }
 
     public int Count => _filter.Count;
 
@@ -48,6 +48,7 @@ public class EntitiesConditionedFilter : EntitiesFilter
     private readonly IPoolsProvider _poolsProvider;
     private readonly RegisteredFilter _filter;
     private readonly ObjectPool<ConditionedEntitiesEnumerator> _enumeratorsPool;
+
     internal EntitiesConditionedFilter(RegisteredFilter filter, IFilterDeclaration declaration, IPoolsProvider provider) : base(filter, declaration)
     {
         _filter = filter;

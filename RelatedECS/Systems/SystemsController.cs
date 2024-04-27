@@ -17,7 +17,6 @@ public class SystemsController : ISystemsController
     private readonly List<ISystemGroup> _groupsList = new(InitialCapacity);
     private readonly Dictionary<string, ISystemGroup> _systemGroups = new(InitialCapacity);
 
-
     public ISystemsController AddSystem(ISystem system)
     {
         _allSystems.Add(system);
@@ -41,48 +40,47 @@ public class SystemsController : ISystemsController
         _prepareSystems.Add(systemGroup);
         _framePrepareSystems.Add(systemGroup);
         _executeSystems.Add(systemGroup);
-        _lateExecuteSystems.Add(systemGroup); 
+        _lateExecuteSystems.Add(systemGroup);
         _frameDisposeSystems.Add(systemGroup);
         _disposeSystems.Add(systemGroup);
 
         return this;
     }
 
-
-    public void Prepare(IWorld world)
+    public void Prepare(ISystemsCollection collection)
     {
-        foreach (var system in _prepareSystems) system.Prepare(world);
+        foreach (var system in _prepareSystems) system.Prepare(collection);
     }
 
-    public void FramePrepare(IWorld world)
+    public void FramePrepare(ISystemsCollection collection)
     {
-        foreach (var system in _framePrepareSystems) system.FramePrepare(world);
+        foreach (var system in _framePrepareSystems) system.FramePrepare(collection);
     }
 
-    public void Execute(IWorld world)
+    public void Execute(ISystemsCollection collection)
     {
         foreach (var system in _executeSystems)
         {
-            if (system.CanBeExecuted(world)) system.Execute(world);
+            if (system.CanBeExecuted(collection)) system.Execute(collection);
         }
     }
 
-    public void LateExecute(IWorld world)
+    public void LateExecute(ISystemsCollection collection)
     {
         foreach (var system in _lateExecuteSystems)
         {
-            if (system.CanBeLateExecuted(world)) system.LateExecute(world);
+            if (system.CanBeLateExecuted(collection)) system.LateExecute(collection);
         }
     }
 
-    public void FrameDispose(IWorld world)
+    public void FrameDispose(ISystemsCollection collection)
     {
-        foreach (var system in _frameDisposeSystems) system.FrameDispose(world);
+        foreach (var system in _frameDisposeSystems) system.FrameDispose(collection);
     }
 
-    public void Dispose(IWorld world)
+    public void Dispose(ISystemsCollection collection)
     {
-        foreach (var system in _disposeSystems) system.Dispose(world);
+        foreach (var system in _disposeSystems) system.Dispose(collection);
     }
 
     public IReadOnlyList<ISystem> GetAllSystems() => _allSystems;

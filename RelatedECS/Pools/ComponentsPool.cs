@@ -24,6 +24,7 @@ public class ComponentsPool<T> : IComponentsPool where T : struct
         Id = id;
         Init();
     }
+
     private void Init()
     {
         _recycledComponentsAmount = IComponentsPool.InitialCapacity;

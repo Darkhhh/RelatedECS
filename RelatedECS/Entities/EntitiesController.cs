@@ -20,7 +20,7 @@ internal class EntitiesController : IEntitiesController
     public void PoolUpdated(Type poolType, int poolIndex, int entity, bool added)
     {
         var wrap = GetWrapById(entity);
-        
+
         var mask = wrap.GetMask();
 
         mask.Set(poolIndex, added);

@@ -37,9 +37,10 @@ public class Entity : IEntity, IInternalEntity
         _alive = true;
         _generation++;
     }
+
     public void PoolReset()
     {
         _mask.Clear();
         _alive = false;
-    } 
+    }
 }

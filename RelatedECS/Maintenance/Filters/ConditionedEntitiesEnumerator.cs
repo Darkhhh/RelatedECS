@@ -1,6 +1,6 @@
 ﻿using RelatedECS.Entities;
-using RelatedECS.Filters.Conditions;
 using RelatedECS.Filters;
+using RelatedECS.Filters.Conditions;
 using RelatedECS.Pools;
 
 namespace RelatedECS.Maintenance.Filters;

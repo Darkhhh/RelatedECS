@@ -7,7 +7,7 @@ public interface IConditionCheck
     bool Check(object obj);
 }
 
-abstract class ConditionCheck<T> : IConditionCheck where T : struct
+internal abstract class ConditionCheck<T> : IConditionCheck where T : struct
 {
     public Type ObjectType => typeof(T);
 

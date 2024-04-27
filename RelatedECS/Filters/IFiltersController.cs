@@ -41,7 +41,7 @@ internal class FiltersController : IFiltersController
         var f = new RegisteredFilter(_entitiesController, masks.With, masks.Without);
         _allFilters.Add(f);
 
-        foreach(var type in declaration.GetWithTypes())
+        foreach (var type in declaration.GetWithTypes())
         {
             if (_filtersByPoolType.TryGetValue(type, out var filters)) filters.Add(f);
             else _filtersByPoolType.Add(type, new HashSet<IRegisteredFilter> { f });
@@ -54,8 +54,6 @@ internal class FiltersController : IFiltersController
 
         return new EntitiesFilter(f, declaration);
     }
-
-    
 
     public void ResizeMasks(int maxPoolIndex)
     {

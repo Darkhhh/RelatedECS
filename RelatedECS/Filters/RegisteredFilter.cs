@@ -43,6 +43,7 @@ internal class RegisteredFilter : IRegisteredFilter, IEntitiesProvider
                 case FilterOperationType.Add:
                     Add(operation.Reference);
                     break;
+
                 case FilterOperationType.Remove:
                     Remove(operation.Reference);
                     break;
@@ -110,7 +111,6 @@ internal class RegisteredFilter : IRegisteredFilter, IEntitiesProvider
         _withMask.Resize(maxPoolIndex);
         _withoutMask.Resize(maxPoolIndex);
     }
-
 
     private void Add(Entity entity)
     {

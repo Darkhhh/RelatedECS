@@ -5,7 +5,6 @@ public class Mask
     internal const int BitSize = 64;
     private ulong[] _array = new ulong[2];
 
-
     public void Set(int index, bool value)
     {
         var arrayIndex = index / BitSize;
@@ -56,23 +55,23 @@ public class Mask
     public bool IsEmpty => _array.All(t => t == 0);
     public int Length => _array.Length;
 
-
     private static ulong SetBit(ulong val, int index, bool bit)
     {
         if (index is < 0 or > BitSize) throw new Exception($"Incorrect bit index {index}");
 
         ulong tempValue = 1;
-        tempValue <<= index;  
-        val &= ~tempValue;             
-        if (bit)           
+        tempValue <<= index;
+        val &= ~tempValue;
+        if (bit)
         {
-            val |= tempValue;            
+            val |= tempValue;
         }
         return val;
     }
+
     private static bool GetBit(ulong val, int index)
     {
         if (index is > BitSize or < 0) throw new Exception($"Incorrect bit index {index}");
-        return ((val >> index) & 1) > 0; 
+        return ((val >> index) & 1) > 0;
     }
 }

@@ -17,9 +17,9 @@ public interface IComponentsPoolsController : IPoolsProvider
 {
     public int PoolsCount { get; }
 
-    public PoolUpdated PoolUpdated { get; }   
+    public PoolUpdated PoolUpdated { get; }
 
     public IComponentsPool CreatePoolOfType(Type componentType);
 
-    public (Mask With, Mask Without) GetMasks(Type[] withTypes, Type[] withoutTypes);  
+    public (Mask With, Mask Without) GetMasks(Type[] withTypes, Type[] withoutTypes);
 }

@@ -5,6 +5,7 @@ namespace RelatedECS.Maintenance.Utilities;
 public interface IObjectPoolAutoReset
 {
     public void PoolInit();
+
     public void PoolReset();
 }
 

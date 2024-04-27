@@ -15,7 +15,7 @@ public interface IEntity
 
     public bool IsAlive { get; }
 
-    public IWorld World { get; }   
+    public IWorld World { get; }
 
     public ref T Add<T>() where T : struct;
 

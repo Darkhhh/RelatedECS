@@ -9,6 +9,7 @@ public class FilterDeclaration : IFilterDeclaration
     public FilterDeclaration(IWorld world) => _world = world;
 
     public Type[] GetWithoutTypes() => _withoutTypes.ToArray();
+
     public Type[] GetWithTypes() => _withTypes.ToArray();
 
     public IFilterDeclaration With<T>() where T : struct
@@ -65,11 +66,11 @@ public class FilterDeclaration : IFilterDeclaration
         var without = other.GetWithoutTypes();
 
         if (with.Length != _withTypes.Count || without.Length != _withoutTypes.Count) return false;
-        foreach(var type in with)
+        foreach (var type in with)
         {
             if (!_withTypes.Contains(type)) return false;
         }
-        foreach(var type in without)
+        foreach (var type in without)
         {
             if (!_withoutTypes.Contains(type)) return false;
         }

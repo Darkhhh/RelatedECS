@@ -4,8 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 namespace RelatedECS.Maintenance.Utilities;
 
 public interface IMessage;
-public interface ISingletonMessage : IMessage;
 
+public interface ISingletonMessage : IMessage;
 
 public interface IMessageBus
 {
@@ -162,7 +162,6 @@ public class MessageBus(IWorld world) : IMessageBus
 
     private readonly Dictionary<Type, HashSet<Action<IWorld>>> _subscribers = new();
 
-
     #region Transient
 
     public void Add<T>(T message) where T : IMessage
@@ -194,7 +193,7 @@ public class MessageBus(IWorld world) : IMessageBus
 
     public void RemoveMessage<T>(T message) where T : IMessage
     {
-        if (!_transientMessages.TryGetValue(typeof(T),out var value)) return;
+        if (!_transientMessages.TryGetValue(typeof(T), out var value)) return;
         value.Remove(message);
     }
 
@@ -205,7 +204,7 @@ public class MessageBus(IWorld world) : IMessageBus
         if (list.Count == 0) return false;
         var temp = list.Last();
         list.Remove(temp);
-        message = (T) temp;
+        message = (T)temp;
         return true;
     }
 
@@ -214,7 +213,7 @@ public class MessageBus(IWorld world) : IMessageBus
         message = default;
         if (!_transientMessages.TryGetValue(typeof(T), out var list)) return false;
         if (list.Count == 0) return false;
-        message = (T) list.Last();
+        message = (T)list.Last();
         return true;
     }
 
@@ -234,12 +233,11 @@ public class MessageBus(IWorld world) : IMessageBus
         message = default;
         if (!_transientMessages.TryGetValue(typeof(T), out var list)) return false;
         if (list.Count == 0) return false;
-        message = (T) list.First();
+        message = (T)list.First();
         return true;
     }
 
-    #endregion
-
+    #endregion Transient
 
     #region Singleton
 
@@ -265,7 +263,7 @@ public class MessageBus(IWorld world) : IMessageBus
     {
         if (_singletonMessages.TryGetValue(typeof(T), out var value))
         {
-            if (value is not null) return (T) value;
+            if (value is not null) return (T)value;
         }
         throw new Exception($"Single message of type {typeof(T).Name} do not exist");
     }
@@ -283,8 +281,7 @@ public class MessageBus(IWorld world) : IMessageBus
         }
     }
 
-    #endregion
-
+    #endregion Singleton
 
     #region Subscriptions
 
@@ -312,8 +309,7 @@ public class MessageBus(IWorld world) : IMessageBus
         _subscribers.Clear();
     }
 
-    #endregion
-
+    #endregion Subscriptions
 
     #region Utilities
 
@@ -327,19 +323,18 @@ public class MessageBus(IWorld world) : IMessageBus
 
     public void ClearAll()
     {
-        foreach(var messages in _transientMessages.Values) messages.Clear();
+        foreach (var messages in _transientMessages.Values) messages.Clear();
         _transientMessages.Clear();
         _singletonMessages.Clear();
     }
 
-    #endregion
-
+    #endregion Utilities
 
     #region Properties
 
     public int Count<T>() where T : IMessage
     {
-        return _transientMessages.TryGetValue(typeof(T), out var value) ? value.Count : 
+        return _transientMessages.TryGetValue(typeof(T), out var value) ? value.Count :
             (_singletonMessages.TryGetValue(typeof(T), out var single) ? (single is null ? 0 : 1) : 0);
     }
 
@@ -348,11 +343,10 @@ public class MessageBus(IWorld world) : IMessageBus
         return _subscribers.TryGetValue(typeof(T), out var subs) ? subs.Count : 0;
     }
 
-    #endregion
-
+    #endregion Properties
 
     private class ClearSystem<T>(IMessageBus bus) : IFrameDisposeSystem where T : IMessage
     {
-        public void FrameDispose(IWorld world) => bus.Clear<T>();
+        public void FrameDispose(ISystemsCollection collection) => bus.Clear<T>();
     }
 }
