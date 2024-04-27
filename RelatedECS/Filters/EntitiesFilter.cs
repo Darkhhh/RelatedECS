@@ -60,7 +60,7 @@ public class EntitiesConditionedFilter : EntitiesFilter
     {
         foreach (var condition in checks)
         {
-            if (!Declaration.HasWithType(condition.ObjectType) || !Declaration.HasWithoutType(condition.ObjectType))
+            if (!Declaration.HasWithType(condition.ObjectType) && !Declaration.HasWithoutType(condition.ObjectType))
                 throw new Exception($"Declaration of filter does not contain {condition.ObjectType.Name} component type");
 #if DEBUG
             Debug.Assert(checks.Select(t => t.ObjectType).ToHashSet().Count == checks.Length);
