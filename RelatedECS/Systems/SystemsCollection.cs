@@ -4,22 +4,25 @@ namespace RelatedECS.Systems;
 
 public interface ISystemsCollection
 {
-    public ISystemsCollection AddSystem(ISystem system);
-
-    public ISystemsCollection AddGroup(ISystemGroup systemGroup);
-
     public ISystemGroup GetSystemGroup(string name);
-
-    public ISystemsCollection Prepare();
-
-    public void Execute();
-
-    public void Dispose();
 
     public IWorld World { get; }
 }
 
-public class SystemsCollection : ISystemsCollection
+public interface IExecutableSystemCollection
+{
+    public IExecutableSystemCollection AddSystem(ISystem system);
+
+    public IExecutableSystemCollection AddGroup(ISystemGroup systemGroup);
+
+    public IExecutableSystemCollection Prepare();
+
+    public void Execute();
+
+    public void Dispose();
+}
+
+public class SystemsCollection : ISystemsCollection, IExecutableSystemCollection
 {
     private readonly IWorld _world;
     private readonly ISystemsController _systemsController;
@@ -32,19 +35,19 @@ public class SystemsCollection : ISystemsCollection
         _systemsController = new SystemsController();
     }
 
-    public ISystemsCollection AddGroup(ISystemGroup systemGroup)
+    public IExecutableSystemCollection AddGroup(ISystemGroup systemGroup)
     {
         _systemsController.AddGroup(systemGroup);
         return this;
     }
 
-    public ISystemsCollection AddSystem(ISystem system)
+    public IExecutableSystemCollection AddSystem(ISystem system)
     {
         _systemsController.AddSystem(system);
         return this;
     }
 
-    public ISystemsCollection Prepare()
+    public IExecutableSystemCollection Prepare()
     {
         _systemsController.Prepare(this);
         return this;

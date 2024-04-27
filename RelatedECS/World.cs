@@ -12,7 +12,6 @@ public class World : IWorld
     private readonly ComponentsPoolsController _componentsPoolsController;
     private readonly EntitiesController _entitiesController;
     private readonly FiltersController _filtersController;
-    private readonly ISystemsController _systemsController;
 
     private readonly MessageBus _messageBus;
     private readonly SharedBag _sharedBag;
