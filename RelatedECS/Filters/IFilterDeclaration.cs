@@ -1,4 +1,6 @@
-﻿namespace RelatedECS.Filters;
+﻿using RelatedECS.Filters.Conditions;
+
+namespace RelatedECS.Filters;
 
 public interface IFilterDeclaration
 {
@@ -17,4 +19,8 @@ public interface IFilterDeclaration
     public bool HasWithType(Type type);
 
     public bool HasWithoutType(Type type);
+
+    public EntitiesFilter Build();
+
+    public EntitiesConditionedFilter BuildAsConditioned();
 }

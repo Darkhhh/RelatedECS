@@ -1,5 +1,6 @@
 ﻿using RelatedECS.Entities;
 using RelatedECS.Filters;
+using RelatedECS.Filters.Conditions;
 using RelatedECS.Maintenance.Utilities;
 using RelatedECS.Pools;
 using RelatedECS.Systems;
@@ -30,14 +31,6 @@ public class World : IWorld
         _sharedBag = new SharedBag();
     }
 
-    public EntitiesFilter RegisterFilter(IFilterDeclaration declaration)
-    {
-        var filter = _filtersController.RegisterAsEntitiesFilter(declaration);
-        _entitiesController.UpdatePoolsAmount(_componentsPoolsController.PoolsCount);
-        _filtersController.ResizeMasks(_componentsPoolsController.PoolsCount);
-        return filter;
-    }
-
     public ComponentsPool<T> GetPool<T>() where T : struct
     {
         var pool = _componentsPoolsController.GetPool<T>();
@@ -54,6 +47,23 @@ public class World : IWorld
     public EntityPack PackEntity(IEntity entity) => _entitiesController.Pack(entity);
 
     public IEntity GetEntityById(int id) => _entitiesController.GetById(id);
+
+
+    internal EntitiesFilter RegisterFilter(IFilterDeclaration declaration)
+    {
+        var filter = _filtersController.RegisterAsEntitiesFilter(declaration);
+        _entitiesController.UpdatePoolsAmount(_componentsPoolsController.PoolsCount);
+        _filtersController.ResizeMasks(_componentsPoolsController.PoolsCount);
+        return filter;
+    }
+
+    internal EntitiesConditionedFilter RegisterAsConditionedFilter(IFilterDeclaration declaration)
+    {
+        var filter = _filtersController.RegisterAsConditionedFilter(declaration);
+        _entitiesController.UpdatePoolsAmount(_componentsPoolsController.PoolsCount);
+        _filtersController.ResizeMasks(_componentsPoolsController.PoolsCount);
+        return filter;
+    }
 
     private void PoolUpdated(Type poolType, int poolIndex, int entity, bool added)
     {

@@ -1,12 +1,14 @@
-﻿namespace RelatedECS.Filters;
+﻿using RelatedECS.Filters.Conditions;
+
+namespace RelatedECS.Filters;
 
 public class FilterDeclaration : IFilterDeclaration
 {
-    private readonly IWorld _world;
+    private readonly World _world;
     private readonly HashSet<Type> _withTypes = new();
     private readonly HashSet<Type> _withoutTypes = new();
 
-    public FilterDeclaration(IWorld world) => _world = world;
+    public FilterDeclaration(World world) => _world = world;
 
     public Type[] GetWithoutTypes() => _withoutTypes.ToArray();
 
@@ -59,6 +61,18 @@ public class FilterDeclaration : IFilterDeclaration
     {
         return _withoutTypes.Contains(type);
     }
+
+
+    public EntitiesFilter Build()
+    {
+        return _world.RegisterFilter(this);
+    }
+
+    public EntitiesConditionedFilter BuildAsConditioned()
+    {
+        return _world.RegisterAsConditionedFilter(this);
+    }
+
 
     internal bool EqualTo(IFilterDeclaration other)
     {
