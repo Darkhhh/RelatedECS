@@ -14,6 +14,8 @@ public class EntitiesFilter : IFilter<IEntity>
 
     internal IFilterDeclaration Declaration { get; }
 
+    internal RegisteredFilter Raw => _filter;
+
     internal EntitiesFilter(RegisteredFilter filter, IFilterDeclaration declaration)
     {
         _filter = filter;
