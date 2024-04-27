@@ -1,5 +1,4 @@
 ﻿using RelatedECS.Entities;
-using RelatedECS.Filters;
 using RelatedECS.Maintenance.Utilities;
 using RelatedECS.Pools;
 
@@ -7,8 +6,6 @@ namespace RelatedECS;
 
 public interface IWorld
 {
-    public EntitiesFilter RegisterFilter(IFilterDeclaration declaration);
-
     public ComponentsPool<T> GetPool<T>() where T : struct;
 
     public IComponentsPool GetPool(Type type);
