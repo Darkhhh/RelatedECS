@@ -35,6 +35,17 @@ public class EntitiesFilterTests
     }
 
     [TestMethod]
+    public void CorrectRawFilterAssignment()
+    {
+        var declaration = new FilterDeclaration(new WorldDummy());
+        var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
+
+        var filter = new EntitiesFilter(f, declaration);
+
+        Assert.IsTrue(ReferenceEquals(filter.Raw, f));
+    }
+
+    [TestMethod]
     public void CorrectOneCycle()
     {
         var declaration = new FilterDeclaration(new WorldDummy());
