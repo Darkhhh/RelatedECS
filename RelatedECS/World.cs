@@ -24,7 +24,6 @@ public class World : IWorld
         _componentsPoolsController = new ComponentsPoolsController(PoolUpdated);
         _entitiesController = new EntitiesController(this);
         _filtersController = new FiltersController(_entitiesController, _componentsPoolsController);
-        _systemsController = new SystemsController();
 
         _messageBus = new MessageBus(this);
         _sharedBag = new SharedBag();
