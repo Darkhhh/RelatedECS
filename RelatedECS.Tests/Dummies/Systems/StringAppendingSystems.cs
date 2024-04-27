@@ -14,7 +14,7 @@ internal class AppendStringPrepareSystem : IPrepareSystem
         this.initial = initial;
     }
 
-    public void Prepare(IWorld world)
+    public void Prepare(ISystemsCollection world)
     {
         data.Append(initial);
     }
@@ -31,7 +31,7 @@ internal class AppendStringFramePrepareSystem : IFramePrepareSystem
         this.initial = initial;
     }
 
-    public void FramePrepare(IWorld world)
+    public void FramePrepare(ISystemsCollection world)
     {
         data.Append(initial);
     }
@@ -51,12 +51,12 @@ internal class AppendStringExecuteSystem : IExecuteSystem
         _canBeExecuted = canBeExecuted;
     }
 
-    public bool CanBeExecuted(IWorld world)
+    public bool CanBeExecuted(ISystemsCollection world)
     {
         return _canBeExecuted is null ? true : _canBeExecuted();
     }
 
-    public void Execute(IWorld world)
+    public void Execute(ISystemsCollection world)
     {
         _data.Append(_appendix);
     }
@@ -76,12 +76,12 @@ internal class AppendStringLateExecuteSystem : ILateExecuteSystem
         _canBeExecuted = canBeExecuted;
     }
 
-    public bool CanBeLateExecuted(IWorld world)
+    public bool CanBeLateExecuted(ISystemsCollection world)
     {
         return _canBeExecuted is null ? true : _canBeExecuted();
     }
 
-    public void LateExecute(IWorld world)
+    public void LateExecute(ISystemsCollection world)
     {
         _data.Append(_appendix);
     }

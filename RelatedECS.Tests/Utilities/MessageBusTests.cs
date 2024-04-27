@@ -1,4 +1,5 @@
 ﻿using RelatedECS.Maintenance.Utilities;
+using RelatedECS.Systems;
 using RelatedECS.Tests.Dummies;
 using RelatedECS.Tests.Dummies.MaintenanceDataStructures;
 using RelatedECS.Tests.Dummies.Messages;
@@ -265,6 +266,7 @@ public class MessageBusTests
     public void CorrectGetClearSystem()
     {
         var world = new WorldDummy();
+        var collection = new SystemsCollection(world);
         IMessageBus bus = new MessageBus(world);
         var system1 = bus.GetClearSystemFor<TransientInt>();
         var system2 = bus.GetClearSystemFor<TransientBool>();
@@ -284,10 +286,10 @@ public class MessageBusTests
         bus.AddSingleton(new SingletonInt() { Message = 1 });
         bus.AddSingleton(new SingletonBool() { Message = true });
 
-        system1.FrameDispose(world);
-        system2.FrameDispose(world);
-        system3.FrameDispose(world);
-        system4.FrameDispose(world);
+        system1.FrameDispose(collection);
+        system2.FrameDispose(collection);
+        system3.FrameDispose(collection);
+        system4.FrameDispose(collection);
 
         Assert.AreEqual(0, bus.Count<TransientInt>());
         Assert.AreEqual(0, bus.Count<TransientBool>());

@@ -25,7 +25,7 @@ public class SystemsControllerTests
     [TestMethod]
     public void SystemsAndGroupsExecutionOrder()
     {
-        var world = new WorldDummy();
+        var world = new SystemsCollection(new WorldDummy());
 
         _systemsController.Prepare(world);
         _systemsController.FramePrepare(world);

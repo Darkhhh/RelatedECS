@@ -1,4 +1,5 @@
-﻿using RelatedECS.Systems.SystemGroups;
+﻿using RelatedECS.Systems;
+using RelatedECS.Systems.SystemGroups;
 using RelatedECS.Tests.Dummies;
 using RelatedECS.Tests.Dummies.MaintenanceDataStructures;
 using RelatedECS.Tests.Dummies.Systems;
@@ -11,7 +12,7 @@ public class SystemGroupsTests
     [TestMethod]
     public void CorrectExecutionOrder()
     {
-        var world = new WorldDummy();
+        var world = new SystemsCollection(new WorldDummy());
         var data = new StringData();
         var group = new SystemGroup("Test")
             .AppendSystem(new AppendStringPrepareSystem(data, "0"))
@@ -38,7 +39,7 @@ public class SystemGroupsTests
     [TestMethod]
     public void SystemGroupDeactivation()
     {
-        var world = new WorldDummy();
+        var world = new SystemsCollection(new WorldDummy());
         var data = new StringData();
         var group = new SystemGroup("Test")
             .AppendSystem(new AppendStringPrepareSystem(data, "0"))
@@ -65,7 +66,7 @@ public class SystemGroupsTests
     [TestMethod]
     public void SystemGroupDeactivationActivation()
     {
-        var world = new WorldDummy();
+        var world = new SystemsCollection(new WorldDummy());
         var data = new StringData();
         var group = new SystemGroup("Test")
             .AppendSystem(new AppendStringPrepareSystem(data, "0"))

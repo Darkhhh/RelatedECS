@@ -11,7 +11,7 @@ public class ExecuteSystemsTests
     [TestMethod]
     public void CanBeExecutedSystemsCorrectExecution()
     {
-        var world = new WorldDummy();
+        var world = new SystemsCollection(new WorldDummy());
         var data = new StringData();
 
         IExecuteSystem sys1;
@@ -29,7 +29,7 @@ public class ExecuteSystemsTests
     [TestMethod]
     public void CanBeExecutedSystemsCorrectExecutionWithDefaultImplementation()
     {
-        var world = new WorldDummy();
+        var world = new SystemsCollection(new WorldDummy());
         var data = new StringData();
 
         IExecuteSystem sys1;
@@ -51,7 +51,7 @@ public class ExecuteSystemsTests
     [TestMethod]
     public void CanBeLateExecutedSystemsCorrectExecution()
     {
-        var world = new WorldDummy();
+        var world = new SystemsCollection(new WorldDummy());
         var data = new StringData();
 
         ILateExecuteSystem sys1;
@@ -78,7 +78,7 @@ internal class AppendStringSystem : IExecuteSystem
         _data = data;
     }
 
-    public void Execute(IWorld world)
+    public void Execute(ISystemsCollection world)
     {
         _data.Append(_appendix);
     }
