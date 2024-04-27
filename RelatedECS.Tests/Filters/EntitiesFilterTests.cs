@@ -12,7 +12,7 @@ public class EntitiesFilterTests
     [TestMethod]
     public void CorrectCount()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
         const int entitiesNumber = 5;
         for (int i = 0; i < entitiesNumber; i++) f.CheckEntity(NewSuitableEntity());
@@ -26,7 +26,7 @@ public class EntitiesFilterTests
     [TestMethod]
     public void CorrectDeclarationAssignment()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
 
         var filter = new EntitiesFilter(f, declaration);
@@ -37,7 +37,7 @@ public class EntitiesFilterTests
     [TestMethod]
     public void CorrectRawFilterAssignment()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
 
         var filter = new EntitiesFilter(f, declaration);
@@ -48,7 +48,7 @@ public class EntitiesFilterTests
     [TestMethod]
     public void CorrectOneCycle()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
         const int entitiesNumber = 5;
         for (int i = 0; i < entitiesNumber; i++) f.CheckEntity(NewSuitableEntity());
@@ -67,7 +67,7 @@ public class EntitiesFilterTests
     [TestMethod]
     public void CorrectTwoCycles()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
         const int entitiesNumber = 5;
         for (int i = 0; i < entitiesNumber; i++) f.CheckEntity(NewSuitableEntity());

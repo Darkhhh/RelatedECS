@@ -1,10 +1,5 @@
 ﻿using RelatedECS.Filters;
 using RelatedECS.Tests.Dummies;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RelatedECS.Tests.Filters;
 
@@ -14,7 +9,7 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectGetWithTypes()
     {
-        var filter = new FilterDeclaration(new WorldDummy());
+        var filter = new FilterDeclaration(new World());
         filter.With<Component1>().With<Component2>();
         var withTypes = filter.GetWithTypes();
         Assert.AreEqual(2, withTypes.Length);
@@ -33,7 +28,7 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectGetWithoutTypes()
     {
-        var filter = new FilterDeclaration(new WorldDummy());
+        var filter = new FilterDeclaration(new World());
         filter.Without<Component1>().Without<Component2>();
         var withoutTypes = filter.GetWithoutTypes();
         Assert.AreEqual(2, withoutTypes.Length);
@@ -52,7 +47,7 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectDuplicateTypesAdding()
     {
-        var filter = new FilterDeclaration(new WorldDummy());
+        var filter = new FilterDeclaration(new World());
         filter.With<Component1>().With<Component1>();
         var types = filter.GetWithTypes();
         Assert.AreEqual(1, types.Length);
@@ -68,14 +63,14 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectTypesIntersectionHandling()
     {
-        var f1 = new FilterDeclaration(new WorldDummy());
+        var f1 = new FilterDeclaration(new World());
         f1.With<Component1>();
         Assert.ThrowsException<Exception>(() =>
         {
             f1.Without<Component1>();
         });
 
-        var f2 = new FilterDeclaration(new WorldDummy());
+        var f2 = new FilterDeclaration(new World());
         f2.Without<Component2>().Without<Component5>();
         Assert.ThrowsException<Exception>(() =>
         {
@@ -86,7 +81,7 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectMultipleWithTypesAdding()
     {
-        var f1 = new FilterDeclaration(new WorldDummy());
+        var f1 = new FilterDeclaration(new World());
         f1.WithTypes(typeof(Component2), typeof(Component3), typeof(Component4));
         var types = f1.GetWithTypes();
         Assert.AreEqual(3, types.Length);
@@ -104,7 +99,7 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectMultipleWithoutTypesAdding()
     {
-        var f1 = new FilterDeclaration(new WorldDummy());
+        var f1 = new FilterDeclaration(new World());
         f1.WithoutTypes(typeof(Component2), typeof(Component3), typeof(Component4));
         var types = f1.GetWithoutTypes();
         Assert.AreEqual(3, types.Length);
@@ -122,7 +117,7 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectTypesIntersectionHandlingWithMultipleAdding()
     {
-        var f1 = new FilterDeclaration(new WorldDummy());
+        var f1 = new FilterDeclaration(new World());
         f1.WithTypes(typeof(Component2), typeof(Component3), typeof(Component4));
 
         Assert.ThrowsException<Exception>(() =>
@@ -130,7 +125,7 @@ public class FilterDeclarationTests
             f1.WithoutTypes(typeof(Component1), typeof(Component3), typeof(Component5));
         });
 
-        var f2 = new FilterDeclaration(new WorldDummy());
+        var f2 = new FilterDeclaration(new World());
         f2.WithoutTypes(typeof(Component2), typeof(Component3), typeof(Component4));
 
         Assert.ThrowsException<Exception>(() =>
@@ -142,11 +137,11 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectComparisonEquals()
     {
-        var f1 = new FilterDeclaration(new WorldDummy());
+        var f1 = new FilterDeclaration(new World());
         f1.WithTypes(typeof(Component2), typeof(Component3), typeof(Component4));
         f1.WithoutTypes(typeof(Component1), typeof(Component5));
 
-        var f2 = new FilterDeclaration(new WorldDummy());
+        var f2 = new FilterDeclaration(new World());
         f2.WithTypes(typeof(Component2), typeof(Component3), typeof(Component4));
         f2.WithoutTypes(typeof(Component1), typeof(Component5));
 
@@ -157,15 +152,15 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectComparisonNotEquals()
     {
-        var f1 = new FilterDeclaration(new WorldDummy());
+        var f1 = new FilterDeclaration(new World());
         f1.WithTypes(typeof(Component2), typeof(Component3), typeof(Component4));
         f1.WithoutTypes(typeof(Component1), typeof(Component5));
 
-        var f2 = new FilterDeclaration(new WorldDummy());
+        var f2 = new FilterDeclaration(new World());
         f2.WithTypes(typeof(Component3), typeof(Component4));
         f2.WithoutTypes(typeof(Component1), typeof(Component5));
 
-        var f3 = new FilterDeclaration(new WorldDummy());
+        var f3 = new FilterDeclaration(new World());
         f3.WithTypes(typeof(Component2), typeof(Component3), typeof(Component4));
         f3.WithoutTypes(typeof(Component1));
 
@@ -182,7 +177,7 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectHasWithType()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         Assert.IsFalse(declaration.HasWithType(typeof(Component2)));
         declaration.With<Component2>();
         Assert.IsTrue(declaration.HasWithType(typeof(Component2)));
@@ -192,7 +187,7 @@ public class FilterDeclarationTests
     [TestMethod]
     public void CorrectHasWithoutType()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         Assert.IsFalse(declaration.HasWithoutType(typeof(Component1)));
         declaration.Without<Component1>();
         Assert.IsTrue(declaration.HasWithoutType(typeof(Component1)));

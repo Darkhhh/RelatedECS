@@ -11,7 +11,7 @@ public class FiltersControllerTests
     [TestMethod]
     public void CorrectRegistration()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         declaration.WithTypes([typeof(C0), typeof(C4), typeof(C7)]);
         declaration.WithoutTypes([typeof(C1), typeof(C8), typeof(C9)]);
 

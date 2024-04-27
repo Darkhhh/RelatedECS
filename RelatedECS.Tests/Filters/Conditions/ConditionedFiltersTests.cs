@@ -13,7 +13,7 @@ public class ConditionedFiltersTests
     [TestMethod]
     public void BaseCorrectCount()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
         const int entitiesNumber = 5;
         for (int i = 0; i < entitiesNumber; i++) f.CheckEntity(NewSuitableEntity());
@@ -27,7 +27,7 @@ public class ConditionedFiltersTests
     [TestMethod]
     public void BaseCorrectDeclarationAssignment()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
 
         var filter = new EntitiesConditionedFilter(f, declaration, _poolsController);
@@ -38,7 +38,7 @@ public class ConditionedFiltersTests
     [TestMethod]
     public void BaseCorrectRawFilterAssignment()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
 
         var filter = new EntitiesConditionedFilter(f, declaration, _poolsController);
@@ -49,7 +49,7 @@ public class ConditionedFiltersTests
     [TestMethod]
     public void BaseCorrectOneCycle()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
         const int entitiesNumber = 5;
         for (int i = 0; i < entitiesNumber; i++) f.CheckEntity(NewSuitableEntity());
@@ -68,7 +68,7 @@ public class ConditionedFiltersTests
     [TestMethod]
     public void BaseCorrectTwoCycles()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
         const int entitiesNumber = 5;
         for (int i = 0; i < entitiesNumber; i++) f.CheckEntity(NewSuitableEntity());
@@ -93,7 +93,7 @@ public class ConditionedFiltersTests
     [TestMethod]
     public void CorrectSuitableEntitiesEnumeration()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         declaration.WithTypes([typeof(C0), typeof(C4), typeof(C7)]);
         declaration.WithoutTypes([typeof(C1), typeof(C8), typeof(C9)]);
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
@@ -118,7 +118,7 @@ public class ConditionedFiltersTests
     [TestMethod]
     public void CorrectNotSuitableEntitiesEnumerationWithoutChecks()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         declaration.WithTypes([typeof(C0), typeof(C4), typeof(C7)]);
         declaration.WithoutTypes([typeof(C1), typeof(C8), typeof(C9)]);
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
@@ -139,7 +139,7 @@ public class ConditionedFiltersTests
     [TestMethod]
     public void CorrectNotSuitableEntitiesEnumeration1()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         declaration.WithTypes([typeof(C0), typeof(C4), typeof(C7)]);
         declaration.WithoutTypes([typeof(C1), typeof(C8), typeof(C9)]);
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
@@ -165,7 +165,7 @@ public class ConditionedFiltersTests
     [TestMethod]
     public void CorrectNotSuitableEntitiesEnumeration2()
     {
-        var declaration = new FilterDeclaration(new WorldDummy());
+        var declaration = new FilterDeclaration(new World());
         declaration.WithTypes([typeof(C0), typeof(C4), typeof(C7)]);
         declaration.WithoutTypes([typeof(C1), typeof(C8), typeof(C9)]);
         var f = new RegisteredFilter(_entitiesController, _masks.With, _masks.Without);
