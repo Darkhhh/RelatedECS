@@ -1,4 +1,5 @@
-﻿using RelatedECS.Maintenance.Utilities;
+﻿using RelatedECS.Entities.Relations;
+using RelatedECS.Maintenance.Utilities;
 
 namespace RelatedECS.Entities;
 
@@ -7,6 +8,8 @@ internal interface IInternalEntity : IObjectPoolAutoReset
     public Mask GetMask();
 
     public int Generation { get; }
+
+    public RelationsContainer GetRelationsContainer();
 }
 
 public interface IEntity

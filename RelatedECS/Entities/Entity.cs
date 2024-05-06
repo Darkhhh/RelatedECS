@@ -1,4 +1,5 @@
-﻿using RelatedECS.Maintenance.Utilities;
+﻿using RelatedECS.Entities.Relations;
+using RelatedECS.Maintenance.Utilities;
 
 namespace RelatedECS.Entities;
 
@@ -7,11 +8,17 @@ public class Entity : IEntity, IInternalEntity
     private readonly IWorld _world;
     private readonly int _id;
     private readonly Mask _mask = new();
+    private readonly RelationsContainer _relationsContainer;
 
     private bool _alive;
     private int _generation;
 
-    public Entity(int id, IWorld world) => (_id, _world) = (id, world);
+    public Entity(int id, IWorld world)
+    {
+        _id = id;
+        _world = world;
+        _relationsContainer = new(this);
+    }
 
     public int Id => _id;
 
@@ -30,6 +37,8 @@ public class Entity : IEntity, IInternalEntity
     public bool Has<T>() where T : struct => _world.GetPool<T>().Has(_id);
 
     public Mask GetMask() => _mask;
+
+    public RelationsContainer GetRelationsContainer() => _relationsContainer;
 
     public void PoolInit()
     {
