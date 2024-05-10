@@ -11,6 +11,7 @@ public class RelationsContainer : IRelations, IRelationsInternal
 
     public void Add<TRelationType>(IEntity entity)
     {
+        if (entity == _main) throw new Exception("Cyclic relataion");
         var type = typeof(TRelationType);
         if (_relations.TryGetValue(type, out var relations))
         {
@@ -25,6 +26,8 @@ public class RelationsContainer : IRelations, IRelationsInternal
     }
 
     public void AddChain(IEntity entity) => _chains.Add(entity);
+
+    internal List<IEntity> GetChains() => _chains.ToList();
 
     public IEnumerable<IEntity> Get<TRelationType>()
     {
