@@ -7,6 +7,7 @@ public class FilterDeclaration : IFilterDeclaration
     private readonly World _world;
     private readonly HashSet<Type> _withTypes = new();
     private readonly HashSet<Type> _withoutTypes = new();
+    private bool _singleton = false;
 
     public FilterDeclaration(World world) => _world = world;
 
@@ -29,6 +30,12 @@ public class FilterDeclaration : IFilterDeclaration
         _world.GetPool<T>();
         if (_withTypes.Contains(type)) throw new Exception($"Intersection by with and without types: {type.Name}");
         _withoutTypes.Add(type);
+        return this;
+    }
+
+    public IFilterDeclaration AsSingleton()
+    {
+        _singleton = true;
         return this;
     }
 

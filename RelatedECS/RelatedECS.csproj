@@ -3,15 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>RelatedECS</Title>
-    <Version>$(VersionPrefix)-alpha</Version>
-    <Authors>Darkhhh</Authors>
-    <Description>Experimental ECS package with entity relation declarations.</Description>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/Darkhhh/RelatedECS</RepositoryUrl>
-    <PackageTags>ECS;Entity Component System</PackageTags>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
