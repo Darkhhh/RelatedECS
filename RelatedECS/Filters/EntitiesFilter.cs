@@ -1,6 +1,7 @@
 ﻿using RelatedECS.Entities;
 using RelatedECS.Maintenance.Filters;
 using RelatedECS.Maintenance.Utilities;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RelatedECS.Filters;
 
@@ -27,6 +28,12 @@ public class EntitiesFilter : IFilter<IEntity>
         var enumerator = _enumeratorsPool.Get();
         _filter.Lock();
         return enumerator;
+    }
+
+    public bool TryGetFirst([MaybeNullWhen(false)] out IEntity entity)
+    {
+        entity = _filter.Get(0) ?? default;
+        return entity is not null;
     }
 
     private EntitiesEnumerator EnumeratorGenerator()
